@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/eleitor")
 public class EleitorController {
@@ -29,6 +31,16 @@ public class EleitorController {
         try {
             String message = this.eleitorService.delete(id);
             return new ResponseEntity<String>(message, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAll() {
+        try {
+            List<Eleitor> eleitores = this.eleitorService.findAll();
+            return new ResponseEntity<List<Eleitor>>(eleitores, HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

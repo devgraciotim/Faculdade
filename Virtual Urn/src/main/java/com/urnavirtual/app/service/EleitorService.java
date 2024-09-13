@@ -6,6 +6,7 @@ import com.urnavirtual.app.repository.EleitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,10 +29,30 @@ public class EleitorService {
         Eleitor eleitor = this.eleitorRepository.findById(id).get();
         eleitor.setStatus(StatusEleitor.INATIVO);
 
+        this.eleitorRepository.save(eleitor);
+
         return "Eleitor inativado\n" + eleitor.toString();
     }
 
     public List<Eleitor> findAll() {
-        return this.eleitorRepository.findAll();
+        List<Eleitor> allEleitores = eleitorRepository.findAll();
+        List<Eleitor> eleitoresAtivos = new ArrayList<>();
+
+        allEleitores.forEach(eleitor -> {
+            if (eleitor.getStatus() != StatusEleitor.INATIVO) {
+                eleitoresAtivos.add(eleitor);
+            }
+        });
+
+        return eleitoresAtivos;
+    }
+
+    public String update(Long id, Eleitor eleitor) {
+        eleitor.setId(id);
+        this.save(eleitor);
+
+
+
+        return "Eleitor atualizado\n" + eleitor.toString();
     }
 }
