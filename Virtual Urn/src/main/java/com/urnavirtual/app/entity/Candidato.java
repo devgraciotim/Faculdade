@@ -28,7 +28,7 @@ public class Candidato {
     private Long numero;
 
     @NotNull
-    private Enum funcao;
+    private String funcao;
 
     @Enumerated(EnumType.STRING)
     private StatusCandidato status;

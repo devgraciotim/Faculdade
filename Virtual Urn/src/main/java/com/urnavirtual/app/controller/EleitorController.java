@@ -45,4 +45,24 @@ public class EleitorController {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/findAllActives")
+    public ResponseEntity<?> findAllActives() {
+        try {
+            List<Eleitor> eleitores = this.eleitorService.findAllActives();
+            return new ResponseEntity<List<Eleitor>>(eleitores, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable @Valid Long id, @RequestBody @Valid Eleitor eleitor) {
+        try {
+            String message = this.eleitorService.update(id, eleitor);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

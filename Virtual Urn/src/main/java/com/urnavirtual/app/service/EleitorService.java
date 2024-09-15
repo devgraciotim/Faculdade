@@ -17,12 +17,16 @@ public class EleitorService {
     public String save(Eleitor eleitor) {
         if (eleitor.getEmail() != null && eleitor.getCpf() != null) {
             eleitor.setStatus(StatusEleitor.APTO);
-        } else {
+        } else if (eleitor.getEmail()  == null || eleitor.getCpf() == null ) {
             eleitor.setStatus(StatusEleitor.PENDENTE);
         }
 
         this.eleitorRepository.save(eleitor);
         return "Eleitor salvo\n" +  eleitor.toString();
+    }
+
+    public List<Eleitor> findAll() {
+        return this.eleitorRepository.findAll();
     }
 
     public String delete(Long id) {
@@ -34,7 +38,7 @@ public class EleitorService {
         return "Eleitor inativado\n" + eleitor.toString();
     }
 
-    public List<Eleitor> findAll() {
+    public List<Eleitor> findAllActives() {
         List<Eleitor> allEleitores = eleitorRepository.findAll();
         List<Eleitor> eleitoresAtivos = new ArrayList<>();
 
@@ -47,12 +51,10 @@ public class EleitorService {
         return eleitoresAtivos;
     }
 
-    public String update(Long id, Eleitor eleitor) {
+    public String update(Long id, Eleitor eleitor) throws Exception {
         eleitor.setId(id);
+
         this.save(eleitor);
-
-
-
-        return "Eleitor atualizado\n" + eleitor.toString();
+        return "Eleitor atualizado\n" + this.eleitorRepository.findById(id);
     }
 }
