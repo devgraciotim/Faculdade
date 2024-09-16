@@ -37,7 +37,7 @@ public class CandidatoController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id, @RequestBody @Valid Candidato candidato) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Candidato candidato) {
         try {
             String message = this.candidatoService.update(id, candidato);
             return new ResponseEntity<String>(message, HttpStatus.OK);

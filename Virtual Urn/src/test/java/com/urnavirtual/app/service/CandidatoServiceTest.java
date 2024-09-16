@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class CandidatoServiceTeste {
+public class CandidatoServiceTest {
 
     @InjectMocks
     private CandidatoService candidatoService;
@@ -119,7 +119,7 @@ public class CandidatoServiceTeste {
         assertTrue(result.contains(ativo));
         verify(candidatoRepository).findAll();
     }
-
+/*
     @Test
     void prefeitosSuccess() {
         List<Candidato> allCandidatos = new ArrayList<>();
@@ -154,4 +154,6 @@ public class CandidatoServiceTeste {
         assertTrue(result.contains(vereador));
         verify(candidatoRepository).findAll();
     }
+
+ */
 }

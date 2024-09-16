@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EleitorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">com.urnavirtual.app.controller</a> &gt; <span class="el_source">EleitorController.java</span></div><h1>EleitorController.java</h1><pre class="source lang-java linenums">package com.urnavirtual.app.controller;
+
+import com.urnavirtual.app.entity.Eleitor;
+import com.urnavirtual.app.service.EleitorService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/eleitor&quot;)
+<span class="fc" id="L15">public class EleitorController {</span>
+    @Autowired
+    private EleitorService eleitorService;
+
+    @PostMapping(&quot;/save&quot;)
+    public ResponseEntity&lt;String&gt; save(@Valid @RequestBody Eleitor eleitor) {
+        try {
+<span class="fc" id="L22">            String message = this.eleitorService.save(eleitor);</span>
+<span class="fc" id="L23">            return new ResponseEntity&lt;String&gt;(message, HttpStatus.OK);</span>
+<span class="nc" id="L24">        } catch(Exception e) {</span>
+<span class="nc" id="L25">            return new ResponseEntity&lt;String&gt;(e.getMessage(), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    @DeleteMapping(&quot;/delete/{id}&quot;)
+    public ResponseEntity&lt;String&gt; save(@PathVariable Long id) {
+        try {
+<span class="fc" id="L32">            String message = this.eleitorService.delete(id);</span>
+<span class="fc" id="L33">            return new ResponseEntity&lt;String&gt;(message, HttpStatus.OK);</span>
+<span class="nc" id="L34">        } catch(Exception e) {</span>
+<span class="nc" id="L35">            return new ResponseEntity&lt;String&gt;(e.getMessage(), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    @GetMapping(&quot;/findAll&quot;)
+    public ResponseEntity&lt;?&gt; findAll() {
+        try {
+<span class="fc" id="L42">            List&lt;Eleitor&gt; eleitores = this.eleitorService.findAll();</span>
+<span class="fc" id="L43">            return new ResponseEntity&lt;List&lt;Eleitor&gt;&gt;(eleitores, HttpStatus.OK);</span>
+<span class="nc" id="L44">        } catch(Exception e) {</span>
+<span class="nc" id="L45">            return new ResponseEntity&lt;String&gt;(e.getMessage(), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    @GetMapping(&quot;/findAllActives&quot;)
+    public ResponseEntity&lt;?&gt; findAllActives() {
+        try {
+<span class="fc" id="L52">            List&lt;Eleitor&gt; eleitores = this.eleitorService.findAllActives();</span>
+<span class="fc" id="L53">            return new ResponseEntity&lt;List&lt;Eleitor&gt;&gt;(eleitores, HttpStatus.OK);</span>
+<span class="nc" id="L54">        } catch(Exception e) {</span>
+<span class="nc" id="L55">            return new ResponseEntity&lt;String&gt;(e.getMessage(), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    @PutMapping(&quot;/update/{id}&quot;)
+    public ResponseEntity&lt;?&gt; update(@PathVariable @Valid Long id, @RequestBody @Valid Eleitor eleitor) {
+        try {
+<span class="fc" id="L62">            String message = this.eleitorService.update(id, eleitor);</span>
+<span class="fc" id="L63">            return new ResponseEntity&lt;&gt;(message, HttpStatus.OK);</span>
+<span class="nc" id="L64">        } catch(Exception e) {</span>
+<span class="nc" id="L65">            return new ResponseEntity&lt;String&gt;(e.getMessage(), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

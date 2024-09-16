@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class Candidato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

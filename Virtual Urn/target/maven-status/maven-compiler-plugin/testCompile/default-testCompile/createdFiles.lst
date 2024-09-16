@@ -1,0 +1,7 @@
+com\urnavirtual\app\service\VotoServiceTest.class
+com\urnavirtual\app\controller\EleitorControllerTest.class
+com\urnavirtual\app\controller\CandidatoControllerTest.class
+com\urnavirtual\app\AppApplicationTests.class
+com\urnavirtual\app\service\CandidatoServiceTest.class
+com\urnavirtual\app\service\EleitorServiceTest.class
+com\urnavirtual\app\controller\VotoControllerTest.class

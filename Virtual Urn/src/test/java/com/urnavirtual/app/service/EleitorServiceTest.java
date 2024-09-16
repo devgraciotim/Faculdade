@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class EleitorServiceTeste {
+public class EleitorServiceTest {
 
     @InjectMocks
     private EleitorService eleitorService;

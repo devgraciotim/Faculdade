@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class EleitorControllerTeste {
+public class EleitorControllerTest {
 
     @InjectMocks
     private EleitorController eleitorController;

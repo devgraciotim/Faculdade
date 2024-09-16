@@ -1,0 +1,119 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Eleitor</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.urnavirtual.app.entity</a>
+</div>
+
+<h1>Coverage Summary for Class: Eleitor (com.urnavirtual.app.entity)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">Eleitor$HibernateInstantiator$lFOKPF4i</td>
+  </tr>
+  <tr>
+    <td class="name">Eleitor$HibernateProxy$4VonsaeX</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.urnavirtual.app.entity;
+&nbsp;
+&nbsp;import com.urnavirtual.app.enums.StatusCandidato;
+&nbsp;import com.urnavirtual.app.enums.StatusEleitor;
+&nbsp;import jakarta.persistence.*;
+&nbsp;import jakarta.validation.constraints.Email;
+&nbsp;import jakarta.validation.constraints.NotBlank;
+&nbsp;import jakarta.validation.constraints.NotNull;
+&nbsp;import jakarta.validation.constraints.Pattern;
+&nbsp;import lombok.*;
+&nbsp;import org.hibernate.validator.constraints.br.CPF;
+&nbsp;
+&nbsp;@Entity
+&nbsp;@Getter
+&nbsp;@Setter
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor
+&nbsp;@ToString
+&nbsp;public class Eleitor {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private Long id;
+&nbsp;
+&nbsp;    @NotBlank
+&nbsp;    private String nome_completo;
+&nbsp;
+&nbsp;    @CPF
+&nbsp;    private String cpf;
+&nbsp;
+&nbsp;    @NotBlank
+&nbsp;    private String profissao;
+&nbsp;
+&nbsp;    @Pattern(regexp = &quot;^\\d{2} 9\\d{4}-\\d{4}$&quot;, message = &quot;Telefone Celular inválido!&quot;)
+&nbsp;    @NotBlank
+&nbsp;    private String telefone_celular;
+&nbsp;
+&nbsp;    @Pattern(regexp = &quot;^\\d{2} 9\\d{4}-\\d{4}$&quot;, message = &quot;Telefone Fixo inválido!&quot;)
+&nbsp;    private String telefone_fixo;
+&nbsp;
+&nbsp;    @Email
+&nbsp;    private String email;
+&nbsp;
+&nbsp;    @Enumerated(EnumType.STRING)
+&nbsp;    private StatusEleitor status;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-09-16 19:48</div>
+</div>
+</body>
+</html>

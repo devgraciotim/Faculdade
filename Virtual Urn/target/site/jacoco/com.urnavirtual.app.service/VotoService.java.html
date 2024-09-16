@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VotoService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">com.urnavirtual.app.service</a> &gt; <span class="el_source">VotoService.java</span></div><h1>VotoService.java</h1><pre class="source lang-java linenums">package com.urnavirtual.app.service;
+
+import com.urnavirtual.app.entity.Apuracao;
+import com.urnavirtual.app.entity.Candidato;
+import com.urnavirtual.app.entity.Eleitor;
+import com.urnavirtual.app.entity.Voto;
+import com.urnavirtual.app.enums.StatusCandidato;
+import com.urnavirtual.app.enums.StatusEleitor;
+import com.urnavirtual.app.repository.CandidatoRepository;
+import com.urnavirtual.app.repository.EleitorRepository;
+import com.urnavirtual.app.repository.VotoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L20">public class VotoService {</span>
+    @Autowired
+    private VotoRepository votoRepository;
+
+    @Autowired
+    private EleitorRepository eleitorRepository;
+
+    @Autowired
+    private CandidatoRepository candidatoRepository;
+
+    @Autowired
+    private CandidatoService candidatoService;
+
+    public String votar(Long id, Voto voto) throws Exception {
+        // Verificar se o vereador é válido e tem a função correta
+<span class="fc" id="L35">        Optional&lt;Candidato&gt; vereadorOpt = this.candidatoRepository.findById(voto.getVereador().getId());</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (!vereadorOpt.isPresent()) {</span>
+<span class="nc" id="L37">            throw new Exception(&quot;Vereador invalido!&quot;);</span>
+        }
+<span class="fc" id="L39">        Candidato vereador = vereadorOpt.get();</span>
+<span class="pc bpc" id="L40" title="2 of 4 branches missed.">        if (!vereador.getFuncao().equals(&quot;VEREADOR&quot;) || vereador.getStatus() != StatusCandidato.ATIVO) {</span>
+<span class="nc" id="L41">            throw new Exception(&quot;O escolhido a vereador deve ter a função vereador e estar ativo&quot;);</span>
+        }
+
+        // Verificar se o prefeito é válido e tem a função correta
+<span class="fc" id="L45">        Optional&lt;Candidato&gt; prefeitoOpt = this.candidatoRepository.findById(voto.getPrefeito().getId());</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (!prefeitoOpt.isPresent()) {</span>
+<span class="nc" id="L47">            throw new Exception(&quot;Prefeito invalido!&quot;);</span>
+        }
+<span class="fc" id="L49">        Candidato prefeito = prefeitoOpt.get();</span>
+<span class="pc bpc" id="L50" title="2 of 4 branches missed.">        if (!prefeito.getFuncao().equals(&quot;PREFEITO&quot;) || prefeito.getStatus() != StatusCandidato.ATIVO) {</span>
+<span class="nc" id="L51">            throw new Exception(&quot;O escolhido a prefeito deve ter a função prefeito e estar ativo&quot;);</span>
+        }
+
+        // Verificar se o eleitor é válido e está apto para votar
+<span class="fc" id="L55">        Optional&lt;Eleitor&gt; eleitorOpt = this.eleitorRepository.findById(id);</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (!eleitorOpt.isPresent()) {</span>
+<span class="nc" id="L57">            throw new Exception(&quot;Eleitor invalido!&quot;);</span>
+        }
+<span class="fc" id="L59">        Eleitor eleitor = eleitorOpt.get();</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (eleitor.getStatus() != StatusEleitor.APTO) {</span>
+<span class="nc" id="L61">            throw new Exception(&quot;Eleitor deve ser APTO para votar&quot;);</span>
+        }
+
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (eleitor.getStatus() == StatusEleitor.VOTOU) {</span>
+<span class="nc" id="L65">            throw new Exception(&quot;Eleitor já votou!&quot;);</span>
+        }
+
+        // Atualizar status do eleitor e salvar o voto
+<span class="fc" id="L69">        eleitor.setStatus(StatusEleitor.VOTOU);</span>
+<span class="fc" id="L70">        this.eleitorRepository.save(eleitor);</span>
+<span class="fc" id="L71">        this.votoRepository.save(voto);</span>
+
+<span class="fc" id="L73">        return voto.getHash();</span>
+    }
+
+    public Apuracao realizarApuracao() {
+<span class="nc" id="L77">        Apuracao apuracao = new Apuracao();</span>
+<span class="nc" id="L78">        List&lt;Candidato&gt; prefeitos = this.candidatoService.prefeitos();</span>
+<span class="nc" id="L79">        List&lt;Candidato&gt; vereadores = this.candidatoService.vereadores();</span>
+
+<span class="nc" id="L81">        prefeitos.forEach(prefeito -&gt; {</span>
+<span class="nc" id="L82">            Long qntVotos = this.votoRepository.countVotosByCandidatoId(prefeito.getId());</span>
+<span class="nc" id="L83">            prefeito.setVotos_apurados(qntVotos);</span>
+<span class="nc" id="L84">        });</span>
+
+<span class="nc" id="L86">        vereadores.forEach(vereador -&gt; {</span>
+<span class="nc" id="L87">            Long qntVotos = this.votoRepository.countVotosByCandidatoId(vereador.getId());</span>
+<span class="nc" id="L88">            vereador.setVotos_apurados(qntVotos);</span>
+<span class="nc" id="L89">        });</span>
+
+<span class="nc" id="L91">        apuracao.setPrefeitos(prefeitos);</span>
+<span class="nc" id="L92">        apuracao.setVereadores(vereadores);</span>
+
+<span class="nc" id="L94">        apuracao.setTotal_votos(this.votoRepository.countTotalVotos());</span>
+
+<span class="nc" id="L96">        return apuracao;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
