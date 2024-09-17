@@ -71,7 +71,7 @@ public class CandidatoService {
         List<Candidato> allCandidatos = this.candidatoRepository.findAll();
         List<Candidato> prefeitos = new ArrayList<>();
         allCandidatos.forEach(prefeito -> {
-            if (prefeito.getFuncao().equals("PREFEITO") && prefeito.getStatus() == StatusCandidato.ATIVO) {
+            if ("PREFEITO".equals(prefeito.getFuncao()) && prefeito.getStatus() == StatusCandidato.ATIVO) {
                 prefeitos.add(prefeito);
             }
         });
@@ -83,7 +83,7 @@ public class CandidatoService {
         List<Candidato> allCandidatos = this.candidatoRepository.findAll();
         List<Candidato> vereadores = new ArrayList<>();
         allCandidatos.forEach(vereador -> {
-            if (vereador.getFuncao().equals("VEREADOR") && vereador.getStatus() == StatusCandidato.ATIVO) {
+            if ("VEREADOR".equals(vereador.getFuncao()) && vereador.getStatus() == StatusCandidato.ATIVO) {
                 vereadores.add(vereador);
             }
         });

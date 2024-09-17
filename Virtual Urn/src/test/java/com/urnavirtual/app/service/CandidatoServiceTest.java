@@ -119,7 +119,7 @@ public class CandidatoServiceTest {
         assertTrue(result.contains(ativo));
         verify(candidatoRepository).findAll();
     }
-/*
+
     @Test
     void prefeitosSuccess() {
         List<Candidato> allCandidatos = new ArrayList<>();
@@ -134,7 +134,9 @@ public class CandidatoServiceTest {
         List<Candidato> result = candidatoService.prefeitos();
 
         assertEquals(1, result.size());
-        //verify(candidatoRepository).findAll();
+        assertEquals("PREFEITO", result.get(0).getFuncao());
+        assertEquals(StatusCandidato.ATIVO, result.get(0).getStatus());
+        verify(candidatoRepository).findAll();
     }
 
     @Test
@@ -155,5 +157,4 @@ public class CandidatoServiceTest {
         verify(candidatoRepository).findAll();
     }
 
- */
 }
