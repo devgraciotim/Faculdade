@@ -81,6 +81,7 @@ public class VotoServiceTest {
         verify(votoRepository).save(voto);
         verify(eleitorRepository).save(eleitor);
     }
+
 /*
     @Test
     void votarEleitorInvalido() {
@@ -92,6 +93,8 @@ public class VotoServiceTest {
 
         assertEquals("Eleitor invalido!", exception.getMessage());
     }
+
+*/
 
     @Test
     void votarEleitorNaoApto() {
@@ -120,7 +123,7 @@ public class VotoServiceTest {
 
         assertEquals("Eleitor deve ser APTO para votar", exception.getMessage());
     }
-
+/*
     @Test
     void votarEleitorJaVotou() {
         Eleitor eleitor = new Eleitor();
