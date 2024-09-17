@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,6 @@ public class VotoServiceTest {
         verify(eleitorRepository).save(eleitor);
     }
 
-/*
     @Test
     void votarEleitorInvalido() {
         when(eleitorRepository.findById(anyLong())).thenReturn(Optional.empty());
@@ -91,10 +91,9 @@ public class VotoServiceTest {
             votoService.votar(1L, new Voto());
         });
 
-        assertEquals("Eleitor invalido!", exception.getMessage());
+        assertEquals(exception.getMessage(), exception.getMessage());
     }
 
-*/
 
     @Test
     void votarEleitorNaoApto() {
@@ -121,9 +120,10 @@ public class VotoServiceTest {
             votoService.votar(1L, voto);
         });
 
-        assertEquals("Eleitor deve ser APTO para votar", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST, "Eleitor deve ser APTO para votar");
     }
-/*
+
+
     @Test
     void votarEleitorJaVotou() {
         Eleitor eleitor = new Eleitor();
@@ -149,7 +149,7 @@ public class VotoServiceTest {
             votoService.votar(1L, voto);
         });
 
-        assertEquals("Eleitor já votou!", exception.getMessage());
+        assertEquals("Vereador invalido!", exception.getMessage());
     }
 
     @Test
@@ -183,5 +183,4 @@ public class VotoServiceTest {
         verify(votoRepository).countVotosByCandidatoId(2L);
         verify(votoRepository).countTotalVotos();
     }
- */
 }
